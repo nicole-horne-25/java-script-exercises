@@ -49,7 +49,7 @@
 
     <div id="rideshare-app">
 
-        <p>Driver: <span id="display-driver">TODO</span></p>
+        <p>Driver: <span id="display-driver"> </span></p>
 
         <p>Vehicle: <span id="display-vehicle">TODO</span></p>
 
@@ -87,8 +87,24 @@
         console.log("---------------------")
         console.log("PART 1...")
 
+        console.log("Your driver is",  trip.driver.first_name)
+        console.log(trip.vehicle.licensePlate)
+        console.log("The number of stops is", trip.stops.length)
 
+        console.log("The first stop is", trip.stops[0].destination)
 
+        console.log("The last stop is", trip.stops[2].destination)
+
+       
+ 
+            trip.stops.forEach(function(name) {
+            console.log("The passenger's name is", name.passenger)
+            })
+
+        var fares = trip.stops.map(function(stop){
+            return stop.fare
+        })
+        console.log("The fares were", fares)
 
 
         console.log("---------------------")
