@@ -62,15 +62,46 @@
         console.log("---------------------")
         console.log("PART 1...")
 
+        console.log("number of products:", products.length)
+        products.forEach(function(p) {
+            console.log("product name and price", p.name, p.price)
+        })
 
-
+        var matchingProducts = products.filter(product => product.price < 50)
+        console.log("number of products less than $50:", matchingProducts.length)
 
 
 
         console.log("---------------------")
         console.log("PART 2...")
 
+        var container = document.getElementById("display-products")
 
+    products.forEach(function(product) {
+    var productDiv = document.createElement("div")
+
+    var nameP = document.createElement("p")
+    nameP.textContent = "Name: " + product.name
+    productDiv.appendChild(nameP)
+
+    var descP = document.createElement("p")
+    descP.textContent = "Description: " + product.description
+    productDiv.appendChild(descP)
+
+    var priceP = document.createElement("p")
+    priceP.textContent = "Price: $" + product.price.toFixed(2)
+    productDiv.appendChild(priceP)
+
+    var img = document.createElement("img")
+    img.src = product.imageURL
+    img.alt = product.name
+    productDiv.appendChild(img)
+
+    var hr = document.createElement("hr")
+    productDiv.appendChild(hr)
+
+    container.appendChild(productDiv)
+})
 
 
     </script>

@@ -27,11 +27,24 @@
 
     <hr>
     <h2>Part 2</h2>
-    <p></p>
+    <p>
+        Write JavaScript code to process the provided <code>tweets</code> variable to answer the questions below.
+        Display the answers on the page in the designated places.
+        <ol type="A">
+            <li>Sort all of the tweets on the basis of likes count in descending order, so the tweet with the highest likes is first.</li>
+            <li>Display the sorted tweets in a table using the designated <code>table</code> element.
+                The table should have five columns:
+                "Tweet Id", "Tweet Text", "User Screen Name", "User Followers", and "Tweet Likes".
+                There should be a row for each tweet.
+                Include the tweet's id, full text, user screen name, user number of followers, and the tweet's likes count.
+            </li>
 
+        </ol>
+    </p>
 
-    <div id="social-feed">
-    </div>
+    <table id="social-feed">
+    </table>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/d3-array@3"></script>
@@ -54,7 +67,7 @@
             },
             {
                 "id": 100200299,
-                "full_text": "@sandwoah yumm...",
+                "full_text": "@sandwhoa yumm...",
                 "img_url": null,
                 "user": {"screen_name": "person2", "followers": 200},
                 "likes_count": 10
@@ -78,11 +91,67 @@
         console.log("---------------------")
         console.log("PART 1...")
 
+        console.log("First tweeter:", tweets[0]["user"]["screen_name"] )
+        
+        var matchingTweets = tweets.filter(function(tweet) {
+    return tweet.full_text.includes("@sandwhoa");
+    });
 
+    console.log("Tweets that mention @sandhwoa:");
+    matchingTweets.forEach(function(tweet) {
+        console.log(tweet.user.screen_name);
+    });
 
+        var mostLikedTweet = matchingTweets.reduce(function(prev, current) {
+        return (prev.likes_count > current.likes_count) ? prev : current;
+    });
+    console.log("Most liked @sandwoah mention:", mostLikedTweet.user.screen_name);
 
         console.log("---------------------")
         console.log("PART 2...")
+
+        var table = document.getElementById("social-feed")
+
+        tweets.sort(function(a, b) {
+            return d3.descending(a["likes_count"], b["likes_count"])
+        })
+
+        // HEADER ROW
+        var headerRow = document.createElement("tr")
+        var headers = ["Tweet Id", "Tweet Text", "User Screen Name", "User Followers", "Tweet Likes"]
+        headers.forEach(headerText => {
+            var th = document.createElement("th")
+            th.textContent = headerText
+            headerRow.appendChild(th)
+        })
+        table.appendChild(headerRow)
+
+        // ROWS
+        tweets.forEach(tweet => {
+            var tr = document.createElement("tr")
+
+            var tdId = document.createElement("td")
+            tdId.textContent = tweet.id
+            tr.appendChild(tdId)
+
+            var tdText = document.createElement("td")
+            tdText.textContent = tweet.full_text
+            tr.appendChild(tdText)
+
+            var tdScreenName = document.createElement("td")
+            tdScreenName.textContent = tweet.user.screen_name
+            tr.appendChild(tdScreenName)
+
+            var tdFollowers = document.createElement("td")
+            tdFollowers.textContent = tweet.user.followers
+            tr.appendChild(tdFollowers)
+
+            var tdLikes = document.createElement("td")
+            tdLikes.textContent = tweet.likes_count
+            tr.appendChild(tdLikes)
+
+            table.appendChild(tr)
+        })
 
 
     </script>
