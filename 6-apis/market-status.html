@@ -85,22 +85,48 @@
 
 
 
-        var requestUrl = `https://www.alphavantage.co/query?function=MARKET_STATUS&apikey=${apiKey}`
+        var requestUrl = `https://www.alphavantage.co/query?function=MARKET_STATUS&apikey=51W3X1ISPF56U274`
         d3.json(requestUrl).then(function(data) {
             console.log("RESPONSE:", data)
 
             console.log("---------------------")
             console.log("PART 1...")
 
+            console.log("number of markets:", data.markets.length)
 
+            var equityMarkets = data.markets.filter(function(market){
+                return market.market_type == "Equity"
+            })
 
+            console.log("Number of equity markets:", equityMarkets.length)
+
+            equityMarkets.forEach(market => {
+                console.log("Market type and region - equity:", market.market_type, market.region)
+            });
+
+            var market = equityMarkets.find(function(market){
+                return market.region == "United States"
+            })
+                
+                console.log("US Market example:", market.market_type, " and other info includes")
+                console.log( market.primary_exchanges)
+                console.log(market.local_open, market.local_close)
+                console.log( market.current_status.toUpperCase())
+                
+           
 
 
             console.log("---------------------")
             console.log("PART 2...")
 
+            document.getElementById("display-region").textContent = market.region
+            document.getElementById("display-type").textContent = market.market_type
+            document.getElementById("display-exchanges").textContent = market.primary_exchanges
+            document.getElementById("display-open").textContent = market.local_open
+            document.getElementById("display-close").textContent = market.local_close
+            document.getElementById("display-status").textContent = market.current_status.toUpperCase()
 
-
+                
 
         }).catch(function(error) {
             console.error("ERROR:", error)

@@ -94,6 +94,18 @@
             console.log("---------------------")
             console.log("PART 1...")
 
+            var earliest = data[data.length - 1]
+            var latest = data[0]
+
+            var earliestClose =  parseFloat(earliest.adjusted_close)
+            var latestClose =  parseFloat(latest.adjusted_close)
+
+            console.log("Number of days:", data.length)
+            console.log("Date and closing price on earleist day:", earliest.timestamp, formatUSD(earliestClose))
+            console.log("Date and closing price on latest day:", latest.timestamp, formatUSD(latestClose))
+
+            var pctChange = (latestClose - earliestClose) / earliestClose
+            console.log("Percent Change:", formatPct(pctChange))
 
 
 
@@ -102,8 +114,10 @@
             console.log("PART 2...")
 
 
-
-
+            document.getElementById("display-symbol").textContent = symbol
+            document.getElementById("display-earliest").textContent = earliest.timestamp, formatUSD(earliestClose)
+            document.getElementById("display-latest").textContent = latest.timestamp, formatUSD(latestClose)
+            document.getElementById("display-pct-change").textContent = formatPct(pctChange)
 
 
             }).catch(function(error) {
