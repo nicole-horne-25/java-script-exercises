@@ -33,7 +33,6 @@
         </ol>
     </p>
 
-
     <h2>Part 2</h2>
     <p>
         Write JavaScript code to answer the questions below.
@@ -48,7 +47,6 @@
             The child <code>div</code> element should contain a <code>p</code> tag to display the drink name,
             and an <code>img</code> tag to display the image (using an image height of 100px).
         </li>
-
     </ol>
 
     <hr>
@@ -58,49 +56,51 @@
     <div id="display-drinks">
     </div>
 
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script type="text/javascript">
 
-        var requestUrl = "TODO"
+        var requestURL = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic`
 
-        d3.json(requestUrl).then(function(data){
+        d3.json(requestURL).then(function(data){
             console.log("DATA:", data)
 
-
             console.log("---------------------")
             console.log("PART 1...")
 
-            var requestURL = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic`
+            console.log("Request URL:", requestURL)
 
-            console.log("---------------------")
-            console.log("PART 1...")
+            
+            console.log("The number of non-alcoholic drinks:", data.drinks.length)
 
-            console.log("DRINKS:", data.drinks.length)
-
+            console.log("Name and unique identifier of each drink")
             data.drinks.forEach(drink => {
                 console.log(drink.idDrink, drink.strDrink)
             })
 
-            //console.log("--------------------------")
-            //var drinkId = 13032
-            //console.log("DRINK ID:", drinkId)
-            //var requestUrl = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkId}`
-            //d3.json(requestUrl).then(function(drinkData){
-            //    //console.log("DATA:", drinkData)
-            //    var drink = drinkData.drinks[0]
-            //    console.log(drink.idDrink, drink.strDrink, drink.strGlass)
-            //    console.log(drink.strInstructions)
-            //})
-
             console.log("---------------------")
             console.log("PART 2...")
+            var displayDrinksCount = document.getElementById("display-drinks-count")
+            var displayDrinks = document.getElementById("display-drinks")
 
+            displayDrinksCount.innerText = data.drinks.length
 
+            data.drinks.forEach(drink => {
+                var div = document.createElement("div")
 
+                var p = document.createElement("p")
+                p.innerText = drink.strDrink
+                div.appendChild(p)
 
+                var img = document.createElement("img")
+                img.src = drink.strDrinkThumb
+                img.height = 100
+                div.appendChild(img)
+
+                displayDrinks.appendChild(div)
+            })
+
+        }).catch(function(error){
+            console.error("Error fetching data:", error)
         })
 
     </script>
